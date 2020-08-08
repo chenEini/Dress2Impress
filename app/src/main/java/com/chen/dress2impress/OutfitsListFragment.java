@@ -79,7 +79,7 @@ public class OutfitsListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_outfits_list, container, false);
 
-        outfitsList = view.findViewById(R.id.outfit_list);
+        outfitsList = view.findViewById(R.id.outfits_list);
         outfitsList.setHasFixedSize(true);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -91,7 +91,7 @@ public class OutfitsListFragment extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                Log.d("TAG", "Row number" + position + "was clicked");
+                Log.d("TAG", "You clicked on row number " + position);
                 Outfit outfit = outfitsData.get(position);
                 parent.onItemSelected(outfit);
             }

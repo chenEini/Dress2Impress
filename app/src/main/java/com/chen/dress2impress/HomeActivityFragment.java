@@ -9,7 +9,7 @@ import android.os.Bundle;
 
 import com.chen.dress2impress.model.Outfit;
 
-public class HomeFragmentActivity extends AppCompatActivity implements OutfitsListFragment.Delegate {
+public class HomeActivityFragment extends AppCompatActivity implements OutfitsListFragment.Delegate {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

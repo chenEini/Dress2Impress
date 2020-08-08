@@ -7,7 +7,7 @@
     android:background="?attr/selectableItemBackground">
 
     <ImageView
-        android:id="@+id/outfit_row_img"
+        android:id="@+id/outfit_row_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -29,7 +29,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/outfit_row_img"
+        app:layout_constraintStart_toEndOf="@+id/outfit_row_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -42,6 +42,6 @@
         android:text="outfit description"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/outfit_row_img"
+        app:layout_constraintStart_toEndOf="@+id/outfit_row_image"
         app:layout_constraintTop_toBottomOf="@+id/outfit_row_title" />
 </androidx.constraintlayout.widget.ConstraintLayout>
