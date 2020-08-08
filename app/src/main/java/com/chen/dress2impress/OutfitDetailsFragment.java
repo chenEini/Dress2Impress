@@ -7,23 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link OutfitsListFragment#newInstance} factory method to
+ * Use the {@link OutfitDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OutfitsListFragment extends Fragment {
-    private String title;
-    private TextView titleTextView;
-
-    void setTitle(String title) {
-        if (titleTextView != null) {
-            titleTextView.setText(title);
-        }
-        this.title = title;
-    }
+public class OutfitDetailsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +24,7 @@ public class OutfitsListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public OutfitsListFragment() {
+    public OutfitDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +34,11 @@ public class OutfitsListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment OutfitsListFragment.
+     * @return A new instance of fragment OutfitDetailsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OutfitsListFragment newInstance(String param1, String param2) {
-        OutfitsListFragment fragment = new OutfitsListFragment();
+    public static OutfitDetailsFragment newInstance(String param1, String param2) {
+        OutfitDetailsFragment fragment = new OutfitDetailsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,10 +59,6 @@ public class OutfitsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_outfits_list, container, false);
-
-        titleTextView = view.findViewById(R.id.outfit_list_fragment_title);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_outfit_details, container, false);
     }
 }
