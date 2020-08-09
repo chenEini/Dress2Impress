@@ -30,9 +30,6 @@ public class HomeActivity extends AppCompatActivity implements OutfitsListFragme
     public void onItemSelected(Outfit outfit) {
         navController = Navigation.findNavController(this, R.id.home_navigation_graph);
 
-        //OutfitsListFragmentDirections.ActionOutfitsListFragmentToOutfitDetailsFragment direction = OutfitsListFragmentDirections.actionOutfitsListFragmentToOutfitDetailsFragment(outfit);
-        //navController.navigate(direction);
-
         NavGraphDirections.ActionGlobalOutfitDetailsFragment direction = OutfitsListFragmentDirections.actionGlobalOutfitDetailsFragment(outfit);
         navController.navigate(direction);
     }
