@@ -13,35 +13,23 @@
         android:id="@+id/outfit_details_title"
         android:layout_width="0dp"
         android:layout_height="19dp"
-        android:layout_marginStart="1dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:text="Outfit Title"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/outfit_details_image"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/outfit_details_image"
-        android:layout_width="203dp"
-        android:layout_height="173dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:contentDescription="TODO"
-        android:src="@drawable/outfit"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/outfit_details_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
+        android:text="Outfit Description"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/outfit_details_image"
@@ -54,9 +42,17 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:text="Back"
+        android:text="Back chen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outfit_details_image" />
+
+    <ImageView
+        android:id="@+id/outfit_details_image"
+        android:layout_width="264dp"
+        android:layout_height="322dp"
+        android:src="@drawable/outfit_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
