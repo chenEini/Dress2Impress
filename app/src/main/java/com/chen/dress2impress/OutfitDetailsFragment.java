@@ -3,6 +3,8 @@ package com.chen.dress2impress;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,13 +35,6 @@ public class OutfitDetailsFragment extends Fragment {
 
     public OutfitDetailsFragment() {
         // Required empty public constructor
-    }
-
-    public void setOutfit(Outfit outfit) {
-        this.outfit = outfit;
-        if (outfitTitle != null) {
-            updateOutfitDisplay();
-        }
     }
 
     /**
@@ -78,9 +73,20 @@ public class OutfitDetailsFragment extends Fragment {
         outfitTitle = view.findViewById(R.id.outfit_details_title);
         outfitDescription = view.findViewById(R.id.outfit_details_description);
 
+        outfit = OutfitDetailsFragmentArgs.fromBundle(getArguments()).getOutfit();
+
         if (outfit != null) {
             updateOutfitDisplay();
         }
+
+        View backBtn = view.findViewById(R.id.outfit_details_back_button);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(view);
+                navController.popBackStack();
+            }
+        });
 
         return view;
     }

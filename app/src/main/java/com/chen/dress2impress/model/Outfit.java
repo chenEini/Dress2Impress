@@ -2,7 +2,9 @@ package com.chen.dress2impress.model;
 
 import androidx.annotation.NonNull;
 
-public class Outfit {
+import java.io.Serializable;
+
+public class Outfit implements Serializable {
     @NonNull
     public String id;
     public String title;

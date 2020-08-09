@@ -12,13 +12,15 @@
         tools:layout="@layout/fragment_outfits_list" >
         <action
             android:id="@+id/action_outfitsListFragment_to_outfitDetailsFragment"
-            app:destination="@id/outfitDetailsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            app:destination="@id/outfitDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/outfitDetailsFragment"
         android:name="com.chen.dress2impress.OutfitDetailsFragment"
         android:label="fragment_outfit_details"
-        tools:layout="@layout/fragment_outfit_details" />
+        tools:layout="@layout/fragment_outfit_details" >
+        <argument
+            android:name="Outfit"
+            app:argType="com.chen.dress2impress.model.Outfit" />
+    </fragment>
 </navigation>

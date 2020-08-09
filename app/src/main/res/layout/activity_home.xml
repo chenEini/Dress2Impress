@@ -7,7 +7,7 @@
     tools:context=".HomeActivity">
 
     <fragment
-        android:id="@+id/home_navigation"
+        android:id="@+id/home_navigation_graph"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
