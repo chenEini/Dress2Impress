@@ -17,10 +17,16 @@
     <fragment
         android:id="@+id/outfitDetailsFragment"
         android:name="com.chen.dress2impress.OutfitDetailsFragment"
-        android:label="fragment_outfit_details"
-        tools:layout="@layout/fragment_outfit_details" >
+        android:label="Details"
+        tools:layout="@layout/fragment_outfit_details">
         <argument
             android:name="Outfit"
             app:argType="com.chen.dress2impress.model.Outfit" />
     </fragment>
+    <action android:id="@+id/action_global_outfitDetailsFragment" app:destination="@id/outfitDetailsFragment" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.chen.dress2impress.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
 </navigation>
