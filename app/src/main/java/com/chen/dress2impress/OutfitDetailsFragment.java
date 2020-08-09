@@ -7,6 +7,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.chen.dress2impress.model.Outfit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +17,10 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class OutfitDetailsFragment extends Fragment {
+    private Outfit outfit;
+
+    TextView outfitTitle;
+    TextView outfitDescription;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +33,13 @@ public class OutfitDetailsFragment extends Fragment {
 
     public OutfitDetailsFragment() {
         // Required empty public constructor
+    }
+
+    public void setOutfit(Outfit outfit) {
+        this.outfit = outfit;
+        if (outfitTitle != null) {
+            updateOutfitDisplay();
+        }
     }
 
     /**
@@ -59,6 +73,20 @@ public class OutfitDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_outfit_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_outfit_details, container, false);
+
+        outfitTitle = view.findViewById(R.id.outfit_details_title);
+        outfitDescription = view.findViewById(R.id.outfit_details_description);
+
+        if (outfit != null) {
+            updateOutfitDisplay();
+        }
+
+        return view;
+    }
+
+    private void updateOutfitDisplay() {
+        outfitTitle.setText(outfit.title);
+        outfitDescription.setText(outfit.description);
     }
 }

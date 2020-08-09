@@ -22,8 +22,9 @@ public class HomeActivityFragment extends AppCompatActivity implements OutfitsLi
         transaction.commit();
     }
 
-    void openOutfitDetails() {
+    void openOutfitDetails(Outfit outfit) {
         OutfitDetailsFragment outfitDetailsFragment = new OutfitDetailsFragment();
+        outfitDetailsFragment.setOutfit(outfit);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.home_fragment_container, outfitDetailsFragment, "TAG");
         transaction.addToBackStack("TAG");
@@ -32,6 +33,6 @@ public class HomeActivityFragment extends AppCompatActivity implements OutfitsLi
 
     @Override
     public void onItemSelected(Outfit outfit) {
-        openOutfitDetails();
+        openOutfitDetails(outfit);
     }
 }
