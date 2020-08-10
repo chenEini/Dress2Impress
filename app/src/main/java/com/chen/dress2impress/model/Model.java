@@ -7,8 +7,10 @@ import java.util.List;
 
 public class Model {
     public static final Model instance = new Model();
+    ModelFirebase modelFirebase;
 
     private Model() {
+        modelFirebase = new ModelFirebase();
     }
 
     public List<Outfit> getAllOutfits() {
@@ -16,10 +18,11 @@ public class Model {
         return data;
     }
 
-    public interface Listener<T>{
+    public interface Listener<T> {
         void onComplete(T data);
     }
-    public interface CompListener{
+
+    public interface CompListener {
         void onComplete();
     }
 
