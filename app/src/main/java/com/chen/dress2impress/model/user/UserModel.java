@@ -1,7 +1,5 @@
 package com.chen.dress2impress.model.user;
 
-import com.chen.dress2impress.model.outfit.OutfitModel;
-
 public class UserModel {
     public static final UserModel instance = new UserModel();
 
