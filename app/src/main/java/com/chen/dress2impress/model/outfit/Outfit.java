@@ -1,4 +1,4 @@
-package com.chen.dress2impress.model;
+package com.chen.dress2impress.model.outfit;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -16,8 +16,8 @@ public class Outfit implements Serializable {
     public String description;
     long lastUpdated;
 
-    public Outfit() {
-    }
+//    public Outfit() {
+//    }
 
     public Outfit(String id, String title, String imageUrl, String description) {
         this.id = id;

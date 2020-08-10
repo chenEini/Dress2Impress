@@ -1,11 +1,13 @@
-package com.chen.dress2impress.model;
+package com.chen.dress2impress.model.outfit;
+
+import com.chen.dress2impress.model.AppLocalDb;
 
 import java.util.List;
 
-public class Model {
-    public static final Model instance = new Model();
+public class OutfitModel {
+    public static final OutfitModel instance = new OutfitModel();
 
-    private Model() {
+    private OutfitModel() {
     }
 
     public interface Listener<T> {
@@ -22,7 +24,7 @@ public class Model {
     }
 
     public void getAllOutfits(final Listener<List<Outfit>> listener) {
-        ModelFirebase.getAllOutfits(listener);
+        OutfitFirebase.getAllOutfits(listener);
 
 //        AsyncTask<String, String, List<Outfit>> task = new AsyncTask<String, String, List<Outfit>>() {
 //            @Override

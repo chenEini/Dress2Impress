@@ -1,4 +1,4 @@
-package com.chen.dress2impress.model;
+package com.chen.dress2impress.model.user;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,6 +6,8 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.chen.dress2impress.model.user.User;
 
 import java.util.List;
 

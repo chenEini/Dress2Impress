@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chen.dress2impress.model.Outfit;
+import com.chen.dress2impress.model.outfit.Outfit;
 
 public class OutfitDetailsFragment extends Fragment {
     private Outfit outfit;

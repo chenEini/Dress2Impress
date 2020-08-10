@@ -1,4 +1,4 @@
-package com.chen.dress2impress.model;
+package com.chen.dress2impress.model.outfit;
 
 import androidx.annotation.NonNull;
 
@@ -15,9 +15,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class ModelFirebase {
+public class OutfitFirebase {
 
-    public static void addOutfit(Outfit outfit, final Model.Listener<Boolean> listener) {
+    public static void addOutfit(Outfit outfit, final OutfitModel.Listener<Boolean> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("outfits").document(outfit.getId()).set(toJson(outfit)).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -29,7 +29,7 @@ public class ModelFirebase {
         });
     }
 
-    public static void getAllOutfits(final Model.Listener<List<Outfit>> listener) {
+    public static void getAllOutfits(final OutfitModel.Listener<List<Outfit>> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("outfits").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -48,11 +48,11 @@ public class ModelFirebase {
     }
 
     private static Outfit factory(Map<String, Object> json) {
-        Outfit outfit = new Outfit();
-        outfit.id = (String) json.get("id");
-        outfit.title = (String) json.get("title");
-        outfit.imageUrl = (String) json.get("imageUrl");
-        outfit.description = (String) json.get("description");
+        String id = (String) json.get("id");
+        String title = (String) json.get("title");
+        String imageUrl = (String) json.get("imageUrl");
+        String description = (String) json.get("description");
+        Outfit outfit = new Outfit(id, title, imageUrl, description);
         Timestamp ts = (Timestamp) json.get("lastUpdated");
         if (ts != null) outfit.lastUpdated = ts.getSeconds();
         return outfit;

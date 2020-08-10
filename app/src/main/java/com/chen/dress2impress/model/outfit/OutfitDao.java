@@ -1,4 +1,4 @@
-package com.chen.dress2impress.model;
+package com.chen.dress2impress.model.outfit;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

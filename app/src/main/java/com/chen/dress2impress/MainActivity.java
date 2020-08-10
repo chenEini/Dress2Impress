@@ -14,7 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.chen.dress2impress.model.Outfit;
+import com.chen.dress2impress.model.outfit.Outfit;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OutfitsListFragment.Delegate {

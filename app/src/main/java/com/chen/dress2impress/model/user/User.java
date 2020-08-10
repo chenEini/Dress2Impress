@@ -1,4 +1,4 @@
-package com.chen.dress2impress.model;
+package com.chen.dress2impress.model.user;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

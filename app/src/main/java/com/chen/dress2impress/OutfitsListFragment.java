@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chen.dress2impress.model.Model;
-import com.chen.dress2impress.model.Outfit;
+import com.chen.dress2impress.model.outfit.OutfitModel;
+import com.chen.dress2impress.model.outfit.Outfit;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class OutfitsListFragment extends Fragment {
     private String mParam2;
 
     public OutfitsListFragment() {
-        Model.instance.getAllOutfits(new Model.Listener<List<Outfit>>() {
+        OutfitModel.instance.getAllOutfits(new OutfitModel.Listener<List<Outfit>>() {
             @Override
             public void onComplete(List<Outfit> data) {
                 outfitsData = data;
