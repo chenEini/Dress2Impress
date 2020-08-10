@@ -40,6 +40,11 @@ public class OutfitFirebase {
                     data = new LinkedList<Outfit>();
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         Outfit outfit = doc.toObject(Outfit.class);
+//                        Outfit outfit = factory(doc.getData());
+
+                        if (outfit.id == null) {
+                            outfit.id = doc.getId();
+                        }
                         data.add(outfit);
                     }
                 }

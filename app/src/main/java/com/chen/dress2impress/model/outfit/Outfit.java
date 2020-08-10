@@ -16,8 +16,8 @@ public class Outfit implements Serializable {
     public String description;
     long lastUpdated;
 
-//    public Outfit() {
-//    }
+    public Outfit() {
+    }
 
     public Outfit(String id, String title, String imageUrl, String description) {
         this.id = id;
