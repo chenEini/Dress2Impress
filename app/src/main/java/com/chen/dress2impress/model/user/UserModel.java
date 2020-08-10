@@ -14,7 +14,7 @@ public class UserModel {
         void onComplete();
     }
 
-    public void signUp(User user) {
-        UserFirebase.signUp(user);
+    public void signIn(String email, String password, Listener<User> listener) {
+        UserFirebase.signIn(email, password, listener);
     }
 }
