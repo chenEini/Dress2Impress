@@ -1,5 +1,8 @@
 package com.chen.dress2impress.model.outfit;
 
+import android.hardware.camera2.params.OisSample;
+import android.os.AsyncTask;
+
 import com.chen.dress2impress.model.AppLocalDb;
 
 import java.util.List;
@@ -24,20 +27,27 @@ public class OutfitModel {
     }
 
     public void getAllOutfits(final Listener<List<Outfit>> listener) {
-        OutfitFirebase.getAllOutfits(listener);
+//        OutfitFirebase.getAllOutfits(listener); // TO FIX
 
-//        AsyncTask<String, String, List<Outfit>> task = new AsyncTask<String, String, List<Outfit>>() {
-//            @Override
-//            protected List<Outfit> doInBackground(String... strings) {
-//                return AppLocalDb.db.outfitDao().getAll();
-//            }
-//            @Override
-//            protected void onPostExecute(List<Outfit> outfits) {
-//                super.onPostExecute(outfits);
-//                if (listener != null) listener.onComplete(outfits);
-//            }
-//        };
-//        task.execute();
+        AsyncTask<String, String, List<Outfit>> task = new AsyncTask<String, String, List<Outfit>>() {
+            List<Outfit> data;
+
+            @Override
+            protected List<Outfit> doInBackground(String... strings) {
+                for (int i = 0; i < 10; i++) {
+                    Outfit outfit = new Outfit("" + i, "title" + i, "image url", "description");
+                    AppLocalDb.db.outfitDao().insertAll(outfit);
+                }
+                return AppLocalDb.db.outfitDao().getAll();
+            }
+
+            @Override
+            protected void onPostExecute(List<Outfit> outfits) {
+                super.onPostExecute(outfits);
+                if (listener != null) listener.onComplete(outfits);
+            }
+        };
+        task.execute();
     }
 
     public Outfit getOutfit(String id) {
