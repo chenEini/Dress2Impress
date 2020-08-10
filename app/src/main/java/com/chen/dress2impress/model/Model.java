@@ -5,10 +5,7 @@ import java.util.List;
 public class Model {
     public static final Model instance = new Model();
 
-    ModelFirebase modelFirebase;
-
     private Model() {
-        modelFirebase = new ModelFirebase();
     }
 
     public interface Listener<T> {
@@ -25,14 +22,11 @@ public class Model {
     }
 
     public void getAllOutfits(final Listener<List<Outfit>> listener) {
-        modelFirebase.getAllOutfits(listener);
+        ModelFirebase.getAllOutfits(listener);
 
 //        AsyncTask<String, String, List<Outfit>> task = new AsyncTask<String, String, List<Outfit>>() {
 //            @Override
 //            protected List<Outfit> doInBackground(String... strings) {
-//                //for (int i = 0; i < 10; i++) {
-//                //AppLocalDb.db.outfitDao().insertAll(new Outfit("" + i, "title" + i, "url" + i, "description" + i));
-//                //}
 //                return AppLocalDb.db.outfitDao().getAll();
 //            }
 //            @Override
