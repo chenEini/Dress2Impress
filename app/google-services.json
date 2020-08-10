@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "499558243514",
+    "firebase_url": "https://dress2impress-ceda4.firebaseio.com",
+    "project_id": "dress2impress-ceda4",
+    "storage_bucket": "dress2impress-ceda4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499558243514:android:6217a130b322b238bef683",
+        "android_client_info": {
+          "package_name": "com.chen.dress2impress"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "499558243514-hb0oamru5net1491dtqehudht329epb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7EswQNyE9in3nya_SEipB4_BVsKWLMhQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "499558243514-hb0oamru5net1491dtqehudht329epb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
