@@ -17,11 +17,13 @@ import android.widget.TextView;
 import com.chen.dress2impress.model.Model;
 import com.chen.dress2impress.model.Outfit;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class OutfitsListFragment extends Fragment {
     RecyclerView outfitsList;
-    List<Outfit> outfitsData;
+    OutfitsListAdapter adapter;
+    List<Outfit> outfitsData = new LinkedList<Outfit>();
 
     Delegate parent;
 
@@ -36,7 +38,15 @@ public class OutfitsListFragment extends Fragment {
     private String mParam2;
 
     public OutfitsListFragment() {
-        outfitsData = Model.instance.getAllOutfits();
+        Model.instance.getAllOutfits(new Model.Listener<List<Outfit>>() {
+            @Override
+            public void onComplete(List<Outfit> data) {
+                outfitsData = data;
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     public static OutfitsListFragment newInstance(String param1, String param2) {
@@ -68,7 +78,7 @@ public class OutfitsListFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         outfitsList.setLayoutManager(layoutManager);
 
-        OutfitsListAdapter adapter = new OutfitsListAdapter();
+        adapter = new OutfitsListAdapter();
         outfitsList.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnItemClickListener() {

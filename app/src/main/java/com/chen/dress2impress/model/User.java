@@ -1,23 +1,29 @@
 package com.chen.dress2impress.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class User {
+import java.io.Serializable;
+
+@Entity
+public class User implements Serializable {
+    @PrimaryKey
     @NonNull
     public String id;
     public String name;
     public String email;
-    public String imgUrl;
+    public String imageUrl;
     long lastUpdated;
 
     public User() {
     }
 
-    public User(String id, String name, String email, String imgUrl) {
+    public User(String id, String name, String email, String imageUrl) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.imgUrl = imgUrl;
+        this.imageUrl = imageUrl;
     }
 
     public void setId(@NonNull String id) {
@@ -32,8 +38,8 @@ public class User {
         this.email = email;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @NonNull
@@ -49,10 +55,9 @@ public class User {
         return email;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
-
 
     public void setLastUpdated(long lastUpdated) {
         this.lastUpdated = lastUpdated;
