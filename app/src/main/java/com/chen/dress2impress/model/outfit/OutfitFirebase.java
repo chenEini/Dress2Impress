@@ -9,6 +9,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -45,6 +46,32 @@ public class OutfitFirebase {
                 listener.onComplete(data);
             }
         });
+    }
+
+    public static void deleteOutfit(String outfitId, final OutfitModel.Listener<Boolean> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("outfits").document(outfitId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (listener != null) {
+                    listener.onComplete(task.isSuccessful());
+                }
+            }
+        });
+    }
+
+    public static void updateOutfit(Outfit outfit, final OutfitModel.Listener<Boolean> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> outfitJson = toJson(outfit);
+        db.collection("outfits").document(outfit.id).set(outfitJson, SetOptions.merge())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (listener != null) {
+                            listener.onComplete(task.isSuccessful());
+                        }
+                    }
+                });
     }
 
     private static Outfit factory(Map<String, Object> json) {
