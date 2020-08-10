@@ -1,6 +1,5 @@
 package com.chen.dress2impress.model.outfit;
 
-import android.hardware.camera2.params.OisSample;
 import android.os.AsyncTask;
 
 import com.chen.dress2impress.model.AppLocalDb;
