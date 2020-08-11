@@ -36,6 +36,7 @@ public class OutfitsListFragment extends Fragment {
     OutfitsListAdapter adapter;
     RecyclerView outfitsList;
     List<Outfit> outfitsData = new LinkedList<Outfit>();
+
     private OutfitsListViewModel viewModel;
 
     Delegate parent;
@@ -140,12 +141,14 @@ public class OutfitsListFragment extends Fragment {
     }
 
     static class OutfitRowViewHolder extends RecyclerView.ViewHolder {
+        TextView userName;
         TextView title;
         TextView description;
         ImageView image;
 
         public OutfitRowViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
+            userName = itemView.findViewById(R.id.outfit_row_user_name);
             title = itemView.findViewById(R.id.outfit_row_title);
             description = itemView.findViewById(R.id.outfit_row_description);
             image = itemView.findViewById(R.id.outfit_row_image);
@@ -164,8 +167,10 @@ public class OutfitsListFragment extends Fragment {
         }
 
         public void bind(Outfit outfit) {
+            userName.setText(outfit.ownerName);
             title.setText(outfit.title);
             description.setText(outfit.description);
+
             if (outfit.imageUrl != null && outfit.imageUrl != "")
                 Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(image);
             else

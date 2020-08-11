@@ -19,29 +19,45 @@
         app:srcCompat="@drawable/outfit" />
 
     <TextView
-        android:id="@+id/outfit_row_title"
+        android:id="@+id/outfit_row_user_name"
         android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="outfit title"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:text="user name"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/outfit_row_image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/outfit_row_title"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="outfit title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/outfit_row_image"
+        app:layout_constraintTop_toBottomOf="@+id/outfit_row_user_name" />
+
+    <TextView
         android:id="@+id/outfit_row_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="outfit description"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/outfit_row_image"
         app:layout_constraintTop_toBottomOf="@+id/outfit_row_title" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
