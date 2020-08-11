@@ -8,7 +8,7 @@ import com.chen.dress2impress.model.outfit.OutfitModel;
 
 import java.util.List;
 
-public class OutfitListViewModel extends ViewModel {
+public class OutfitsListViewModel extends ViewModel {
     private LiveData<List<Outfit>> liveData;
 
     public LiveData<List<Outfit>> getData() {

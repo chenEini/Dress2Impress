@@ -36,7 +36,7 @@ public class OutfitsListFragment extends Fragment {
     OutfitsListAdapter adapter;
     RecyclerView outfitsList;
     List<Outfit> outfitsData = new LinkedList<Outfit>();
-    private OutfitListViewModel viewModel;
+    private OutfitsListViewModel viewModel;
 
     Delegate parent;
 
@@ -112,7 +112,7 @@ public class OutfitsListFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        viewModel = new ViewModelProvider(this).get(OutfitListViewModel.class);
+        viewModel = new ViewModelProvider(this).get(OutfitsListViewModel.class);
     }
 
     @Override
