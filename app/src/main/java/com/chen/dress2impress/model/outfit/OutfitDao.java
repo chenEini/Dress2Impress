@@ -1,5 +1,6 @@
 package com.chen.dress2impress.model.outfit;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -11,7 +12,7 @@ import java.util.List;
 @Dao
 public interface OutfitDao {
     @Query("select * from Outfit")
-    List<Outfit> getAll();
+    LiveData<List<Outfit>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Outfit... outfits);

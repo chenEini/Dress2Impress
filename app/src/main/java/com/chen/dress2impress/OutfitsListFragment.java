@@ -5,8 +5,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +28,7 @@ public class OutfitsListFragment extends Fragment {
     RecyclerView outfitsList;
     OutfitsListAdapter adapter;
     List<Outfit> outfitsData = new LinkedList<Outfit>();
+    private OutfitListViewModel viewModel;
 
     Delegate parent;
 
@@ -38,15 +43,6 @@ public class OutfitsListFragment extends Fragment {
     private String mParam2;
 
     public OutfitsListFragment() {
-        OutfitModel.instance.getAllOutfits(new OutfitModel.Listener<List<Outfit>>() {
-            @Override
-            public void onComplete(List<Outfit> data) {
-                outfitsData = data;
-                if (adapter != null) {
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
     }
 
     public static OutfitsListFragment newInstance(String param1, String param2) {
@@ -90,6 +86,27 @@ public class OutfitsListFragment extends Fragment {
             }
         });
 
+        LiveData<List<Outfit>> liveData = viewModel.getData();
+        liveData.observe(getViewLifecycleOwner(), new Observer<List<Outfit>>() {
+            @Override
+            public void onChanged(List<Outfit> outfits) {
+                outfitsData = outfits;
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        final SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.outfit_list_swipe_refresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.refresh(new OutfitModel.CompleteListener() {
+                    @Override
+                    public void onComplete() {
+                        swipeRefresh.setRefreshing(false);
+                    }
+                });
+            }
+        });
         return view;
     }
 
@@ -102,6 +119,8 @@ public class OutfitsListFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + "outfit list parent activity must implement delegate");
         }
+
+        viewModel = new ViewModelProvider(this).get(OutfitListViewModel.class);
     }
 
     @Override
