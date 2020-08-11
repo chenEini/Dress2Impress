@@ -1,16 +1,22 @@
 package com.chen.dress2impress.model.outfit;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.SnapshotMetadata;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -24,21 +30,48 @@ public class OutfitFirebase {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Timestamp ts = new Timestamp(since, 0);
         db.collection(OUTFIT_COLLECTION).whereGreaterThanOrEqualTo("lastUpdated", ts)
-                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Outfit> data = null;
-                if (task.isSuccessful()) {
-                    data = new LinkedList<Outfit>();
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                        Map<String, Object> json = doc.getData();
-                        Outfit outfit = factory(doc.getId(), json);
-                        data.add(outfit);
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.d("TAG", "", e);
+                            listener.onComplete(null);
+                        }
+
+                        List<Outfit> outfits = new LinkedList<Outfit>();
+                        List<Outfit> outfitsToDelete = new LinkedList<Outfit>();
+
+                        for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
+                            switch (documentChange.getType()) {
+                                case ADDED:
+                                case MODIFIED:
+                                    SnapshotMetadata metadata = documentChange.getDocument().getMetadata();
+                                    if (!metadata.hasPendingWrites()) {
+                                        Map<String, Object> json = documentChange.getDocument().getData();
+                                        Outfit outfit = factory(documentChange.getDocument().getId(), json);
+                                        outfits.add(outfit);
+                                    }
+                                    break;
+                                case REMOVED:
+                                    Map<String, Object> json = documentChange.getDocument().getData();
+                                    Outfit outfit = factory(documentChange.getDocument().getId(), json);
+                                    outfitsToDelete.add(outfit);
+                                    break;
+                            }
+                        }
+
+                        if (!outfitsToDelete.isEmpty()) {
+                            OutfitModel.instance.deleteOutfits(outfitsToDelete, new OutfitModel.Listener<Object>() {
+                                @Override
+                                public void onComplete(Object data) {
+                                    Log.d("TAG", "deleted outfits");
+                                }
+                            });
+                        }
+
+                        listener.onComplete(outfits);
                     }
-                }
-                listener.onComplete(data);
-            }
-        });
+                });
     }
 
     public static void addOutfit(final Outfit outfit, final OutfitModel.Listener<Outfit> listener) {

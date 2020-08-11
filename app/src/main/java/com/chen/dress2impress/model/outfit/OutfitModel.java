@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import com.chen.dress2impress.MyApplication;
 import com.chen.dress2impress.model.AppLocalDb;
@@ -86,6 +84,21 @@ public class OutfitModel {
     public void updateOutfit(Outfit outfit) {
     }
 
-    public void deleteOutfit(Outfit outfit) {
+    public void deleteOutfits(final List<Outfit> outfits, final Listener<Object> listener) {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                for (Outfit outfit : outfits) {
+                    AppLocalDb.db.outfitDao().delete(outfit);
+                }
+                return "";
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (listener != null) listener.onComplete(null);
+            }
+        }.execute("");
     }
 }
