@@ -8,25 +8,33 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chen.dress2impress.model.outfit.OutfitModel;
 import com.chen.dress2impress.model.outfit.Outfit;
+import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class OutfitsListFragment extends Fragment {
-    RecyclerView outfitsList;
     OutfitsListAdapter adapter;
+    RecyclerView outfitsList;
     List<Outfit> outfitsData = new LinkedList<Outfit>();
     private OutfitListViewModel viewModel;
 
@@ -36,31 +44,12 @@ public class OutfitsListFragment extends Fragment {
         void onItemSelected(Outfit outfit);
     }
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     public OutfitsListFragment() {
-    }
-
-    public static OutfitsListFragment newInstance(String param1, String param2) {
-        OutfitsListFragment fragment = new OutfitsListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -86,15 +75,6 @@ public class OutfitsListFragment extends Fragment {
             }
         });
 
-        LiveData<List<Outfit>> liveData = viewModel.getData();
-        liveData.observe(getViewLifecycleOwner(), new Observer<List<Outfit>>() {
-            @Override
-            public void onChanged(List<Outfit> outfits) {
-                outfitsData = outfits;
-                adapter.notifyDataSetChanged();
-            }
-        });
-
         final SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.outfit_list_swipe_refresh);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -107,6 +87,16 @@ public class OutfitsListFragment extends Fragment {
                 });
             }
         });
+
+        LiveData<List<Outfit>> liveData = viewModel.getData();
+        liveData.observe(getViewLifecycleOwner(), new Observer<List<Outfit>>() {
+            @Override
+            public void onChanged(List<Outfit> outfits) {
+                outfitsData = outfits;
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         return view;
     }
 
@@ -120,6 +110,8 @@ public class OutfitsListFragment extends Fragment {
                     + "outfit list parent activity must implement delegate");
         }
 
+        setHasOptionsMenu(true);
+
         viewModel = new ViewModelProvider(this).get(OutfitListViewModel.class);
     }
 
@@ -129,14 +121,34 @@ public class OutfitsListFragment extends Fragment {
         parent = null;
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.outfits_list_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_outfit_list_add:
+                NavController navController = Navigation.findNavController(outfitsList);
+                NavDirections directions = NewOutfitFragmentDirections.actionGlobalNewOutfitFragment();
+                navController.navigate(directions);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     static class OutfitRowViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView description;
+        ImageView image;
 
         public OutfitRowViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             title = itemView.findViewById(R.id.outfit_row_title);
             description = itemView.findViewById(R.id.outfit_row_description);
+            image = itemView.findViewById(R.id.outfit_row_image);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,6 +166,10 @@ public class OutfitsListFragment extends Fragment {
         public void bind(Outfit outfit) {
             title.setText(outfit.title);
             description.setText(outfit.description);
+            if (outfit.imageUrl != null && outfit.imageUrl != "")
+                Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(image);
+            else
+                image.setImageResource(R.drawable.outfit);
         }
     }
 

@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.chen.dress2impress.MyApplication;
 import com.chen.dress2impress.model.AppLocalDb;
@@ -63,9 +65,13 @@ public class OutfitModel {
         });
     }
 
-    public void addOutfit(Outfit outfit, Listener<Boolean> listener) {
-        OutfitFirebase.addOutfit(outfit, listener);
-        AppLocalDb.db.outfitDao().insertAll(outfit);
+    public void addOutfit(Outfit outfit, final CompleteListener listener) {
+        OutfitFirebase.addOutfit(outfit, new Listener<Outfit>() {
+            @Override
+            public void onComplete(Outfit data) {
+                refreshOutfitsList(listener);
+            }
+        });
     }
 
     public Outfit getOutfit(String id) {

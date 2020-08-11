@@ -21,6 +21,12 @@ public class Outfit implements Serializable {
     public Outfit() {
     }
 
+    public Outfit(String title, String imageUrl, String description) {
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.description = description;
+    }
+
     public Outfit(String id, String title, String imageUrl, String description) {
         this.id = id;
         this.title = title;

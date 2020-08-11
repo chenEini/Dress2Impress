@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -38,7 +39,6 @@ public class OutfitFirebase {
                     }
                 }
                 listener.onComplete(data);
-                Log.d("TAG", "refresh " + data.size());
             }
         });
     }
@@ -64,13 +64,15 @@ public class OutfitFirebase {
         });
     }
 
-    public static void addOutfit(Outfit outfit, final OutfitModel.Listener<Boolean> listener) {
+    public static void addOutfit(final Outfit outfit, final OutfitModel.Listener<Outfit> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(OUTFIT_COLLECTION).document(outfit.getId()).set(toJson(outfit)).addOnCompleteListener(new OnCompleteListener<Void>() {
+        db.collection(OUTFIT_COLLECTION).add(outfit).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onComplete(@NonNull Task<DocumentReference> task) {
                 if (listener != null) {
-                    listener.onComplete(task.isSuccessful());
+                    DocumentReference doc = task.getResult();
+                    outfit.id = doc.getId();
+                    listener.onComplete(outfit);
                 }
             }
         });

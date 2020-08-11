@@ -1,5 +1,8 @@
 package com.chen.dress2impress;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -10,9 +13,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-
-import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.chen.dress2impress.model.outfit.Outfit;
 import com.google.android.material.navigation.NavigationView;
@@ -30,8 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
