@@ -85,7 +85,7 @@ public class OutfitFirebase {
         String title = (String) json.get("title");
         String imageUrl = (String) json.get("imageUrl");
         String description = (String) json.get("description");
-        Outfit outfit = new Outfit(id, title, imageUrl, description);
+        Outfit outfit = new Outfit(id, "", "", title, imageUrl, description);
         Timestamp ts = (Timestamp) json.get("lastUpdated");
         if (ts != null) outfit.lastUpdated = ts.getSeconds();
         return outfit;

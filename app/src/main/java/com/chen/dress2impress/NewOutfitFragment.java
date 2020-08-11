@@ -86,7 +86,7 @@ public class NewOutfitFragment extends Fragment {
         FirebaseStorage.uploadImage(imageBitmap, "outfit_image" + d.getTime(), new FirebaseStorage.Listener() {
             @Override
             public void onSuccess(String url) {
-                Outfit outfit = new Outfit(title, url, description);
+                Outfit outfit = new Outfit("", "", title, url, description);
                 OutfitModel.instance.addOutfit(outfit, new OutfitModel.CompleteListener() {
                     @Override
                     public void onComplete() {

@@ -6,4 +6,7 @@
     <item
         android:id="@+id/newOutfitFragment"
         android:title="New Outfit" />
+    <item
+        android:id="@+id/userProfileFragment"
+        android:title="My Profile" />
 </menu>

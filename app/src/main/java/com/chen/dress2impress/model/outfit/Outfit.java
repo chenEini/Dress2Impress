@@ -11,8 +11,8 @@ public class Outfit implements Serializable {
     @PrimaryKey
     @NonNull
     public String id;
-    //public String ownerId;
-    //public String ownerName;
+    public String ownerId;
+    public String ownerName;
     public String title;
     public String imageUrl;
     public String description;
@@ -21,14 +21,18 @@ public class Outfit implements Serializable {
     public Outfit() {
     }
 
-    public Outfit(String title, String imageUrl, String description) {
+    public Outfit(String ownerId, String ownerName, String title, String imageUrl, String description) {
+        this.ownerId = ownerId;
+        this.ownerName = ownerName;
         this.title = title;
         this.imageUrl = imageUrl;
         this.description = description;
     }
 
-    public Outfit(String id, String title, String imageUrl, String description) {
+    public Outfit(String id, String ownerId, String ownerName, String title, String imageUrl, String description) {
         this.id = id;
+        this.ownerId = ownerId;
+        this.ownerName = ownerName;
         this.title = title;
         this.imageUrl = imageUrl;
         this.description = description;
@@ -36,6 +40,14 @@ public class Outfit implements Serializable {
 
     public void setId(@NonNull String id) {
         this.id = id;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     public void setTitle(String title) {
@@ -53,6 +65,14 @@ public class Outfit implements Serializable {
     @NonNull
     public String getId() {
         return id;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
     }
 
     public String getTitle() {

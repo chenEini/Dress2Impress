@@ -31,4 +31,9 @@
         android:name="com.chen.dress2impress.NewOutfitFragment"
         android:label="fragment_new_outfit"
         tools:layout="@layout/fragment_new_outfit" /><action android:id="@+id/action_global_newOutfitFragment" app:destination="@id/newOutfitFragment"/>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.chen.dress2impress.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" /><action android:id="@+id/action_global_userProfileFragment" app:destination="@id/userProfileFragment"/>
 </navigation>
