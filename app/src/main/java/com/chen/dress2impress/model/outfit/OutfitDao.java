@@ -14,6 +14,9 @@ public interface OutfitDao {
     @Query("select * from Outfit")
     LiveData<List<Outfit>> getAll();
 
+    @Query("select * from Outfit where ownerId = :userId")
+    LiveData<List<Outfit>> getUserOutfits(String userId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Outfit... outfits);
 

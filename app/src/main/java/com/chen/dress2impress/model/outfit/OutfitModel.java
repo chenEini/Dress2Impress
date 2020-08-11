@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 
 import com.chen.dress2impress.MyApplication;
 import com.chen.dress2impress.model.AppLocalDb;
+import com.chen.dress2impress.model.user.User;
 
 import java.util.List;
 
@@ -63,6 +64,10 @@ public class OutfitModel {
                 }.execute("");
             }
         });
+    }
+
+    public LiveData<List<Outfit>> getUserOutfits(User currentUser) {
+        return AppLocalDb.db.outfitDao().getUserOutfits(currentUser.id);
     }
 
     public void addOutfit(Outfit outfit, final CompleteListener listener) {
