@@ -26,4 +26,9 @@
     <action
         android:id="@+id/action_global_outfitDetailsFragment"
         app:destination="@id/outfitDetailsFragment" />
+    <fragment
+        android:id="@+id/newOutfitFragment"
+        android:name="com.chen.dress2impress.NewOutfitFragment"
+        android:label="fragment_new_outfit"
+        tools:layout="@layout/fragment_new_outfit" /><action android:id="@+id/action_global_newOutfitFragment" app:destination="@id/newOutfitFragment"/>
 </navigation>
