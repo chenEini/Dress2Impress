@@ -14,7 +14,23 @@ public class UserModel {
         void onComplete();
     }
 
-    public void signIn(String email, String password, Listener<User> listener) {
-        UserFirebase.signIn(email, password, listener);
+    public User getCurrentUser() {
+        return UserFirebase.getCurrentUser();
+    }
+
+    public boolean isUserLoggedIn() {
+        return this.getCurrentUser() != null;
+    }
+
+    public void register(User user, String password, Listener<Boolean> listener) {
+        UserFirebase.register(user, password, listener);
+    }
+
+    public void login(String email, String password, Listener<Boolean> listener) {
+        UserFirebase.login(email, password, listener);
+    }
+
+    public void logout() {
+        UserFirebase.logout();
     }
 }

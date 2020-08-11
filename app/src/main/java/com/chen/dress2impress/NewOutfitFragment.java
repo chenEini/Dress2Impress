@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.chen.dress2impress.model.FirebaseStorage;
 import com.chen.dress2impress.model.outfit.Outfit;
 import com.chen.dress2impress.model.outfit.OutfitModel;
+import com.chen.dress2impress.model.user.User;
+import com.chen.dress2impress.model.user.UserModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Date;
@@ -86,7 +88,8 @@ public class NewOutfitFragment extends Fragment {
         FirebaseStorage.uploadImage(imageBitmap, "outfit_image" + d.getTime(), new FirebaseStorage.Listener() {
             @Override
             public void onSuccess(String url) {
-                Outfit outfit = new Outfit("", "", title, url, description);
+                User user = UserModel.instance.getCurrentUser();
+                Outfit outfit = new Outfit(user.id, user.name, title, url, description);
                 OutfitModel.instance.addOutfit(outfit, new OutfitModel.CompleteListener() {
                     @Override
                     public void onComplete() {

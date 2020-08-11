@@ -85,7 +85,9 @@ public class OutfitFirebase {
         String title = (String) json.get("title");
         String imageUrl = (String) json.get("imageUrl");
         String description = (String) json.get("description");
-        Outfit outfit = new Outfit(id, "", "", title, imageUrl, description);
+        String ownerId = (String) json.get("ownerId");
+        String ownerName = (String) json.get("ownerName");
+        Outfit outfit = new Outfit(id, ownerId, ownerName, title, imageUrl, description);
         Timestamp ts = (Timestamp) json.get("lastUpdated");
         if (ts != null) outfit.lastUpdated = ts.getSeconds();
         return outfit;
@@ -93,10 +95,12 @@ public class OutfitFirebase {
 
     private static Map<String, Object> toJson(Outfit outfit) {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("name", outfit.title);
+        result.put("title", outfit.title);
         result.put("imageUrl", outfit.imageUrl);
         result.put("description", outfit.description);
         result.put("lastUpdated", FieldValue.serverTimestamp());
+        result.put("ownerName", outfit.ownerName);
+        result.put("ownerId", outfit.ownerId);
         return result;
     }
 }
