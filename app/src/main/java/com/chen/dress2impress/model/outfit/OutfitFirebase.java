@@ -1,7 +1,5 @@
 package com.chen.dress2impress.model.outfit;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,28 +32,7 @@ public class OutfitFirebase {
                     data = new LinkedList<Outfit>();
                     for (QueryDocumentSnapshot doc : task.getResult()) {
                         Map<String, Object> json = doc.getData();
-                        Outfit outfit = factory(json);
-                        data.add(outfit);
-                    }
-                }
-                listener.onComplete(data);
-            }
-        });
-    }
-
-    public static void getAllOutfits(final OutfitModel.Listener<List<Outfit>> listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(OUTFIT_COLLECTION).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<Outfit> data = null;
-                if (task.isSuccessful()) {
-                    data = new LinkedList<Outfit>();
-                    for (QueryDocumentSnapshot doc : task.getResult()) {
-                        Outfit outfit = doc.toObject(Outfit.class);
-                        if (outfit.id == null) {
-                            outfit.id = doc.getId();
-                        }
+                        Outfit outfit = factory(doc.getId(), json);
                         data.add(outfit);
                     }
                 }
@@ -66,7 +43,7 @@ public class OutfitFirebase {
 
     public static void addOutfit(final Outfit outfit, final OutfitModel.Listener<Outfit> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(OUTFIT_COLLECTION).add(outfit).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+        db.collection(OUTFIT_COLLECTION).add(toJson(outfit)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 if (listener != null) {
@@ -104,8 +81,7 @@ public class OutfitFirebase {
         });
     }
 
-    private static Outfit factory(Map<String, Object> json) {
-        String id = (String) json.get("id");
+    private static Outfit factory(String id, Map<String, Object> json) {
         String title = (String) json.get("title");
         String imageUrl = (String) json.get("imageUrl");
         String description = (String) json.get("description");
@@ -117,7 +93,6 @@ public class OutfitFirebase {
 
     private static Map<String, Object> toJson(Outfit outfit) {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id", outfit.id);
         result.put("name", outfit.title);
         result.put("imageUrl", outfit.imageUrl);
         result.put("description", outfit.description);
