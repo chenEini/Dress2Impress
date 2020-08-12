@@ -10,9 +10,9 @@ import java.io.Serializable;
 public class User implements Serializable {
     @PrimaryKey
     @NonNull
-    public String id;
-    public String name;
-    public String email;
+    public String id = "";
+    public String name = "";
+    public String email = "";
     long lastUpdated;
 
     public User() {
