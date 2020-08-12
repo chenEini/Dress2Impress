@@ -77,7 +77,8 @@ public class OutfitModel {
             OutfitFirebase.addOutfit(outfit, listener);
     }
 
-    public void updateOutfit(Outfit outfit) {
+    public void deleteOutfit(Outfit outfit) {
+        OutfitFirebase.deleteOutfit(outfit.id);
     }
 
     @SuppressLint("StaticFieldLeak")

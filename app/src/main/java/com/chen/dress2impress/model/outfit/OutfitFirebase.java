@@ -91,13 +91,14 @@ public class OutfitFirebase {
         });
     }
 
-    public static void deleteOutfit(String outfitId, final OutfitModel.Listener<Boolean> listener) {
+    public static void deleteOutfit(String outfitId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(OUTFIT_COLLECTION).document(outfitId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (listener != null) listener.onComplete(task.isSuccessful());
-
+                if (!task.isSuccessful()) {
+                    Log.w("TAG", "Failed to delete outfit", task.getException());
+                }
             }
         });
     }

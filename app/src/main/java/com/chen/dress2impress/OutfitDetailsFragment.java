@@ -96,9 +96,7 @@ public class OutfitDetailsFragment extends Fragment {
                 navController.navigate(updatedDirections);
                 return true;
             case R.id.menu_outfit_details_delete:
-                List<Outfit> outfitToDelete = new LinkedList<>();
-                outfitToDelete.add(outfit);
-                OutfitModel.instance.deleteOutfits(outfitToDelete);
+                OutfitModel.instance.deleteOutfit(outfit);
                 navController.navigateUp();
                 return true;
         }
