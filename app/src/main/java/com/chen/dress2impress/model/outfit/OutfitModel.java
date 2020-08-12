@@ -70,8 +70,11 @@ public class OutfitModel {
         return AppLocalDb.db.outfitDao().getUserOutfits(currentUser.id);
     }
 
-    public void addOutfit(Outfit outfit, final CompleteListener listener) {
-        OutfitFirebase.addOutfit(outfit, listener);
+    public void addOrUpdateOutfit(Outfit outfit, final CompleteListener listener) {
+        if (outfit.id != null && !outfit.id.isEmpty())
+            OutfitFirebase.updateOutfit(outfit, listener);
+        else
+            OutfitFirebase.addOutfit(outfit, listener);
     }
 
     public void updateOutfit(Outfit outfit) {

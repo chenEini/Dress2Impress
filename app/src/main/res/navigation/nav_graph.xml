@@ -31,7 +31,11 @@
         android:id="@+id/newOutfitFragment"
         android:name="com.chen.dress2impress.NewOutfitFragment"
         android:label="New Outfit"
-        tools:layout="@layout/fragment_new_outfit" />
+        tools:layout="@layout/fragment_new_outfit" >
+        <argument
+            android:name="Outfit"
+            app:argType="com.chen.dress2impress.model.outfit.Outfit" />
+    </fragment>
     <action
         android:id="@+id/action_global_newOutfitFragment"
         app:destination="@id/newOutfitFragment" />
@@ -64,6 +68,7 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
-    </fragment><action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment"/>
+    </fragment>
+    <action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment" />
 
 </navigation>

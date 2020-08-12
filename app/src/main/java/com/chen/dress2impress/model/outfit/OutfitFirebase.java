@@ -80,18 +80,15 @@ public class OutfitFirebase {
         });
     }
 
-    public static void updateOutfit(Outfit outfit, final OutfitModel.Listener<Boolean> listener) {
+    public static void updateOutfit(Outfit outfit, final OutfitModel.CompleteListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> outfitJson = toJson(outfit);
-        db.collection(OUTFIT_COLLECTION).document(outfit.id).set(outfitJson, SetOptions.merge())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (listener != null) {
-                            listener.onComplete(task.isSuccessful());
-                        }
-                    }
-                });
+        db.collection(OUTFIT_COLLECTION).document(outfit.id).set(outfitJson, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (listener != null) listener.onComplete();
+            }
+        });
     }
 
     public static void deleteOutfit(String outfitId, final OutfitModel.Listener<Boolean> listener) {

@@ -16,11 +16,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chen.dress2impress.model.outfit.Outfit;
 import com.chen.dress2impress.model.outfit.OutfitModel;
 import com.chen.dress2impress.model.user.UserModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class OutfitDetailsFragment extends Fragment {
 
     TextView outfitTitle;
     TextView outfitDescription;
+    ImageView outfitImage;
 
     public OutfitDetailsFragment() {
         // Required empty public constructor
@@ -49,8 +52,10 @@ public class OutfitDetailsFragment extends Fragment {
 
         outfitTitle = view.findViewById(R.id.outfit_details_title);
         outfitDescription = view.findViewById(R.id.outfit_details_description);
+        outfitImage = view.findViewById(R.id.outfit_details_image);
 
         outfit = OutfitDetailsFragmentArgs.fromBundle(getArguments()).getOutfit();
+
         if (outfit != null) updateOutfitDisplay();
 
         View backButton = view.findViewById(R.id.outfit_details_back_button);
@@ -85,7 +90,7 @@ public class OutfitDetailsFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.menu_outfit_details_update:
-                NavDirections updatedDirections = OutfitDetailsFragmentDirections.actionGlobalNewOutfitFragment();
+                NavDirections updatedDirections = OutfitDetailsFragmentDirections.actionGlobalNewOutfitFragment(outfit);
                 navController.navigate(updatedDirections);
                 return true;
             case R.id.menu_outfit_details_delete:
@@ -101,5 +106,10 @@ public class OutfitDetailsFragment extends Fragment {
     private void updateOutfitDisplay() {
         outfitTitle.setText(outfit.title);
         outfitDescription.setText(outfit.description);
+
+        if (outfit.imageUrl != null && outfit.imageUrl != "")
+            Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(outfitImage);
+        else
+            outfitImage.setImageResource(R.drawable.outfit);
     }
 }

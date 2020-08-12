@@ -132,7 +132,7 @@ public class OutfitsListFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.menu_outfit_list_add:
                 NavController navController = Navigation.findNavController(outfitsList);
-                NavDirections directions = NewOutfitFragmentDirections.actionGlobalNewOutfitFragment();
+                NavDirections directions = NewOutfitFragmentDirections.actionGlobalNewOutfitFragment(null);
                 navController.navigate(directions);
                 return true;
         }

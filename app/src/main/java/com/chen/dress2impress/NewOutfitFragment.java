@@ -4,12 +4,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +13,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.chen.dress2impress.model.FirebaseStorage;
 import com.chen.dress2impress.model.outfit.Outfit;
 import com.chen.dress2impress.model.outfit.OutfitModel;
-import com.chen.dress2impress.model.user.User;
-import com.chen.dress2impress.model.user.UserModel;
 import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
@@ -37,6 +35,7 @@ public class NewOutfitFragment extends Fragment {
     TextView outfitTitle;
     TextView outfitDescription;
     ProgressBar progressbar;
+    Outfit outfit;
 
     public NewOutfitFragment() {
         // Required empty public constructor
@@ -50,6 +49,8 @@ public class NewOutfitFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_new_outfit, container, false);
+
+        outfit = NewOutfitFragmentArgs.fromBundle(getArguments()).getOutfit();
 
         progressbar = view.findViewById(R.id.new_outfit_progress);
         progressbar.setVisibility(View.INVISIBLE);
@@ -65,6 +66,16 @@ public class NewOutfitFragment extends Fragment {
 
         outfitTitle = view.findViewById(R.id.new_outfit_title);
         outfitDescription = view.findViewById(R.id.new_outfit_description);
+
+        if (outfit != null) {
+            outfitTitle.setText(outfit.title);
+            outfitDescription.setText(outfit.description);
+
+            if (outfit.imageUrl != null && outfit.imageUrl != "")
+                Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(imageView);
+            else
+                imageView.setImageResource(R.drawable.outfit);
+        }
 
         Button saveBtn = view.findViewById(R.id.new_outfit_save_button);
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +100,11 @@ public class NewOutfitFragment extends Fragment {
             @Override
             public void onSuccess(String url) {
                 //User user = UserModel.instance.getCurrentUser();
-                Outfit outfit = new Outfit("user.id", "user.name", title, url, description);
-                OutfitModel.instance.addOutfit(outfit, new OutfitModel.CompleteListener() {
+                Outfit newOutfit = new Outfit("user.id", "user.name", title, url, description);
+                if (outfit != null) {
+                    newOutfit.setId(outfit.id);
+                }
+                OutfitModel.instance.addOrUpdateOutfit(newOutfit, new OutfitModel.CompleteListener() {
                     @Override
                     public void onComplete() {
                         NavController navController = Navigation.findNavController(view);
