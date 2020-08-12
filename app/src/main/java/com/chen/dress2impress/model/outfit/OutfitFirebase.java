@@ -29,6 +29,7 @@ public class OutfitFirebase {
     public static void getAllOutfitsSince(long since, final OutfitModel.Listener<List<Outfit>> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Timestamp ts = new Timestamp(since, 0);
+
         db.collection(OUTFIT_COLLECTION).whereGreaterThanOrEqualTo("lastUpdated", ts)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -38,8 +39,8 @@ public class OutfitFirebase {
                             listener.onComplete(null);
                         }
 
-                        List<Outfit> outfits = new LinkedList<Outfit>();
-                        List<Outfit> outfitsToDelete = new LinkedList<Outfit>();
+                        List<Outfit> outfits = new LinkedList<>();
+                        List<Outfit> outfitsToDelete = new LinkedList<>();
 
                         for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
                             switch (documentChange.getType()) {
@@ -61,12 +62,7 @@ public class OutfitFirebase {
                         }
 
                         if (!outfitsToDelete.isEmpty()) {
-                            OutfitModel.instance.deleteOutfits(outfitsToDelete, new OutfitModel.Listener<Object>() {
-                                @Override
-                                public void onComplete(Object data) {
-                                    Log.d("TAG", "deleted outfits");
-                                }
-                            });
+                            OutfitModel.instance.deleteOutfits(outfitsToDelete);
                         }
 
                         listener.onComplete(outfits);
@@ -74,16 +70,12 @@ public class OutfitFirebase {
                 });
     }
 
-    public static void addOutfit(final Outfit outfit, final OutfitModel.Listener<Outfit> listener) {
+    public static void addOutfit(final Outfit outfit, final OutfitModel.CompleteListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(OUTFIT_COLLECTION).add(toJson(outfit)).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
-                if (listener != null) {
-                    DocumentReference doc = task.getResult();
-                    outfit.id = doc.getId();
-                    listener.onComplete(outfit);
-                }
+                if (listener != null) listener.onComplete();
             }
         });
     }
@@ -107,9 +99,8 @@ public class OutfitFirebase {
         db.collection(OUTFIT_COLLECTION).document(outfitId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                if (listener != null) {
-                    listener.onComplete(task.isSuccessful());
-                }
+                if (listener != null) listener.onComplete(task.isSuccessful());
+
             }
         });
     }

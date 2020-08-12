@@ -3,6 +3,7 @@ package com.chen.dress2impress.model.outfit;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -26,12 +27,6 @@ public class OutfitModel {
     }
 
     private OutfitModel() {
-    }
-
-    public LiveData<List<Outfit>> getAllOutfits() {
-        LiveData<List<Outfit>> liveData = AppLocalDb.db.outfitDao().getAll();
-        refreshOutfitsList(null);
-        return liveData;
     }
 
     public void refreshOutfitsList(final CompleteListener listener) {
@@ -65,27 +60,25 @@ public class OutfitModel {
         });
     }
 
+    public LiveData<List<Outfit>> getAllOutfits() {
+        LiveData<List<Outfit>> liveData = AppLocalDb.db.outfitDao().getAll();
+        refreshOutfitsList(null);
+        return liveData;
+    }
+
     public LiveData<List<Outfit>> getUserOutfits(User currentUser) {
         return AppLocalDb.db.outfitDao().getUserOutfits(currentUser.id);
     }
 
     public void addOutfit(Outfit outfit, final CompleteListener listener) {
-        OutfitFirebase.addOutfit(outfit, new Listener<Outfit>() {
-            @Override
-            public void onComplete(Outfit data) {
-                refreshOutfitsList(listener);
-            }
-        });
-    }
-
-    public Outfit getOutfit(String id) {
-        return null;
+        OutfitFirebase.addOutfit(outfit, listener);
     }
 
     public void updateOutfit(Outfit outfit) {
     }
 
-    public void deleteOutfits(final List<Outfit> outfits, final Listener<Object> listener) {
+    @SuppressLint("StaticFieldLeak")
+    public void deleteOutfits(final List<Outfit> outfits) {
         new AsyncTask<String, String, String>() {
             @Override
             protected String doInBackground(String... strings) {
@@ -98,7 +91,7 @@ public class OutfitModel {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                if (listener != null) listener.onComplete(null);
+                Log.d("TAG", "deleted outfits");
             }
         }.execute("");
     }
