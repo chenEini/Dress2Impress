@@ -41,7 +41,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-
     @NonNull
     public String getId() {
         return id;

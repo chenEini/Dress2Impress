@@ -1,6 +1,5 @@
 package com.chen.dress2impress.model.user;
 
-import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,10 +26,7 @@ public class UserFirebase {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            updateUserProfile(user);
-                            if (listener != null) {
-                                listener.onComplete(true);
-                            }
+                            updateUserProfile(user, listener);
                         } else {
                             Log.w("TAG", "Failed to register user", task.getException());
                             if (listener != null) {
@@ -66,21 +62,24 @@ public class UserFirebase {
         auth.signOut();
     }
 
+    private static void updateUserProfile(User user, final UserModel.Listener<Boolean> listener) {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(user.name).build();
+
+        firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                listener.onComplete(task.isSuccessful());
+            }
+        });
+    }
+
     private static User factory(FirebaseUser firUser) {
         return new User(
                 firUser.getUid(),
                 firUser.getDisplayName(),
                 firUser.getEmail()
         );
-    }
-
-    private static void updateUserProfile(User user) {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(user.name)
-                .build();
-
-        firebaseUser.updateProfile(profileUpdates);
     }
 }

@@ -21,13 +21,8 @@ public class LoginFragment extends Fragment {
 
     private LoginViewModel mViewModel;
 
-    public static LoginFragment newInstance() {
-        return new LoginFragment();
-    }
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.login_fragment, container, false);
 
         View loginButton = view.findViewById(R.id.login_button);
@@ -36,6 +31,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View buttonView) {
                 TextView email = view.findViewById(R.id.login_user_email);
                 TextView password = view.findViewById(R.id.login_user_password);
+
                 mViewModel.login(email.getText().toString(), password.getText().toString(), new UserModel.Listener<Boolean>() {
                     @Override
                     public void onComplete(Boolean data) {
@@ -60,7 +56,6 @@ public class LoginFragment extends Fragment {
                 navController.navigate(directions);
             }
         });
-
         return view;
     }
 
@@ -68,6 +63,5 @@ public class LoginFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        // TODO: Use the ViewModel
     }
 }

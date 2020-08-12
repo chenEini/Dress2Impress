@@ -29,6 +29,16 @@ public class OutfitModel {
     private OutfitModel() {
     }
 
+    public LiveData<List<Outfit>> getAllOutfits() {
+        LiveData<List<Outfit>> liveData = AppLocalDb.db.outfitDao().getAll();
+        refreshOutfitsList(null);
+        return liveData;
+    }
+
+    public LiveData<List<Outfit>> getUserOutfits(User currentUser) {
+        return AppLocalDb.db.outfitDao().getUserOutfits(currentUser.id);
+    }
+
     public void refreshOutfitsList(final CompleteListener listener) {
         long lastUpdated = MyApplication.context.getSharedPreferences("TAG", MODE_PRIVATE).getLong("OutfitsLastUpdateDate", 0);
 
@@ -58,16 +68,6 @@ public class OutfitModel {
                 }.execute("");
             }
         });
-    }
-
-    public LiveData<List<Outfit>> getAllOutfits() {
-        LiveData<List<Outfit>> liveData = AppLocalDb.db.outfitDao().getAll();
-        refreshOutfitsList(null);
-        return liveData;
-    }
-
-    public LiveData<List<Outfit>> getUserOutfits(User currentUser) {
-        return AppLocalDb.db.outfitDao().getUserOutfits(currentUser.id);
     }
 
     public void addOrUpdateOutfit(Outfit outfit, final CompleteListener listener) {

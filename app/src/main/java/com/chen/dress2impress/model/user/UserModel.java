@@ -10,10 +10,6 @@ public class UserModel {
         void onComplete(T data);
     }
 
-    public interface CompListener {
-        void onComplete();
-    }
-
     public User getCurrentUser() {
         return UserFirebase.getCurrentUser();
     }
