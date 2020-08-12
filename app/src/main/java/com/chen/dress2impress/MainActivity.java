@@ -50,9 +50,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         navController.navigate(R.id.outfitsListFragment);
                         break;
                     case R.id.newOutfitFragment:
-                        if (UserModel.instance.isUserLoggedIn())
-                            navController.navigate(R.id.newOutfitFragment);
-                        else {
+                        if (UserModel.instance.isUserLoggedIn()) {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("Outfit", new Outfit());
+                            navController.navigate(R.id.newOutfitFragment, bundle);
+                        } else {
                             navController.navigateUp();
                             navController.navigate(R.id.action_global_loginFragment);
                         }
