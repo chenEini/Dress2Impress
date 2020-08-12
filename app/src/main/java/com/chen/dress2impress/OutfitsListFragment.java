@@ -33,16 +33,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class OutfitsListFragment extends Fragment {
+    private OutfitsListViewModel viewModel;
+
     OutfitsListAdapter adapter;
     RecyclerView outfitsList;
-    List<Outfit> outfitsData = new LinkedList<Outfit>();
-
-    private OutfitsListViewModel viewModel;
+    List<Outfit> outfitsData = new LinkedList<>();
 
     Delegate parent;
 
     interface Delegate {
-        void onItemSelected(Outfit outfit);
+        void onItemSelected(String source,Outfit outfit);
     }
 
     public OutfitsListFragment() {
@@ -70,9 +70,8 @@ public class OutfitsListFragment extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                Log.d("TAG", "You clicked on row number " + position);
                 Outfit outfit = outfitsData.get(position);
-                parent.onItemSelected(outfit);
+                parent.onItemSelected("fragment_outfits_list",outfit);
             }
         });
 

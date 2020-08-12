@@ -57,10 +57,7 @@ public class OutfitDetailsFragment extends Fragment {
         outfitDescription = view.findViewById(R.id.outfit_details_description);
 
         outfit = OutfitDetailsFragmentArgs.fromBundle(getArguments()).getOutfit();
-
-        if (outfit != null) {
-            updateOutfitDisplay();
-        }
+        if (outfit != null) updateOutfitDisplay();
 
         View backBtn = view.findViewById(R.id.outfit_details_back_button);
         backBtn.setOnClickListener(new View.OnClickListener() {

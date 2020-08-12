@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
 
@@ -58,8 +57,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onItemSelected(Outfit outfit) {
-        NavGraphDirections.ActionGlobalOutfitDetailsFragment direction = OutfitsListFragmentDirections.actionGlobalOutfitDetailsFragment(outfit);
-        navController.navigate(direction);
+    public void onItemSelected(String source, Outfit outfit) {
+        switch (source) {
+            case "fragment_outfits_list":
+                OutfitsListFragmentDirections.ActionOutfitsListFragmentToOutfitDetailsFragment listDirection = OutfitsListFragmentDirections.actionOutfitsListFragmentToOutfitDetailsFragment(outfit);
+                navController.navigate(listDirection);
+                break;
+            case "fragment_user_profile":
+                UserProfileFragmentDirections.ActionUserProfileFragmentToOutfitDetailsFragment profileDirection = UserProfileFragmentDirections.actionUserProfileFragmentToOutfitDetailsFragment(outfit);
+                navController.navigate(profileDirection);
+                break;
+        }
     }
 }

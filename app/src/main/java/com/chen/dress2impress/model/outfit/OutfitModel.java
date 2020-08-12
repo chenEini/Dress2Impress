@@ -36,6 +36,7 @@ public class OutfitModel {
 
     public void refreshOutfitsList(final CompleteListener listener) {
         long lastUpdated = MyApplication.context.getSharedPreferences("TAG", MODE_PRIVATE).getLong("OutfitsLastUpdateDate", 0);
+
         OutfitFirebase.getAllOutfitsSince(lastUpdated, new Listener<List<Outfit>>() {
             @SuppressLint("StaticFieldLeak")
             @Override

@@ -26,11 +26,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserProfileFragment extends Fragment {
+    private UserProfileViewModel viewModel;
+
     OutfitsListAdapter adapter;
     RecyclerView profileOutfitsList;
     List<Outfit> profileOutfitsData = new LinkedList<Outfit>();
-
-    private UserProfileViewModel viewModel;
 
     OutfitsListFragment.Delegate parent;
 
@@ -59,9 +59,8 @@ public class UserProfileFragment extends Fragment {
         adapter.setOnItemClickListener(new OutfitsListFragment.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                Log.d("TAG", "You clicked on row number " + position);
                 Outfit outfit = profileOutfitsData.get(position);
-                parent.onItemSelected(outfit);
+                parent.onItemSelected("fragment_user_profile",outfit);
             }
         });
 
