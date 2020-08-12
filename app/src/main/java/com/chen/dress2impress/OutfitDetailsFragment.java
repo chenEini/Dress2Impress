@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.chen.dress2impress.model.outfit.Outfit;
 import com.chen.dress2impress.model.outfit.OutfitModel;
+import com.chen.dress2impress.model.user.User;
 import com.chen.dress2impress.model.user.UserModel;
 import com.squareup.picasso.Picasso;
 
@@ -79,7 +80,8 @@ public class OutfitDetailsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (outfit.ownerId.equals(UserModel.instance.getCurrentUser().id)) {
+        User user = UserModel.instance.getCurrentUser();
+        if (user != null && outfit.ownerId.equals(user.id)) {
             inflater.inflate(R.menu.outfit_details_menu, menu);
         }
     }
