@@ -90,7 +90,7 @@ public class UserProfileFragment extends Fragment {
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View buttonView) {
-                UserModel.instance.logout();
+                viewModel.logout();
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.outfitsListFragment);
             }
