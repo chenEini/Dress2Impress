@@ -1,12 +1,11 @@
 package com.chen.dress2impress;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
@@ -14,6 +13,9 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.chen.dress2impress.model.user.UserModel;
 
 public class LoginFragment extends Fragment {
 
@@ -26,13 +28,21 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_fragment, container, false);
+        final View view = inflater.inflate(R.layout.login_fragment, container, false);
 
         View loginButton = view.findViewById(R.id.login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View buttonView) {
+                TextView email = view.findViewById(R.id.login_user_email);
+                TextView password = view.findViewById(R.id.login_user_password);
+                mViewModel.login(email.getText().toString(), password.getText().toString(), new UserModel.Listener<Boolean>() {
+                    @Override
+                    public void onComplete(Boolean data) {
+                        NavController navController = Navigation.findNavController(view);
+                        navController.navigateUp();
+                    }
+                });
             }
         });
 
@@ -52,8 +62,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         // TODO: Use the ViewModel
     }
-
 }
