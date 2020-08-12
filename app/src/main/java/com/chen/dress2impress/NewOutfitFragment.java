@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -22,7 +23,6 @@ import com.chen.dress2impress.model.FirebaseStorage;
 import com.chen.dress2impress.model.outfit.Outfit;
 import com.chen.dress2impress.model.outfit.OutfitModel;
 import com.chen.dress2impress.model.user.User;
-import com.chen.dress2impress.model.user.UserModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -31,6 +31,8 @@ import java.util.Date;
 import static android.app.Activity.RESULT_OK;
 
 public class NewOutfitFragment extends Fragment {
+    private NewOutfitViewModel mViewModel;
+
     View view;
     ImageView imageView;
     Bitmap imageBitmap;
@@ -88,6 +90,12 @@ public class NewOutfitFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mViewModel = new ViewModelProvider(this).get(NewOutfitViewModel.class);
+    }
+
     private void saveOutfit() {
         progressbar.setVisibility(View.VISIBLE);
         Date d = new Date();
@@ -114,12 +122,16 @@ public class NewOutfitFragment extends Fragment {
     private void addOrUpdateOutfit(String url) {
         final String title = outfitTitle.getText().toString();
         final String description = outfitDescription.getText().toString();
-        User user = UserModel.instance.getCurrentUser();
+
+        User user = mViewModel.getCurrentUser();
+
         final Outfit newOutfit = new Outfit(user.id, user.name, title, url, description);
+
         if (!outfit.id.isEmpty()) {
             newOutfit.setId(outfit.id);
         }
-        OutfitModel.instance.addOrUpdateOutfit(newOutfit, new OutfitModel.CompleteListener() {
+
+        mViewModel.addOrUpdateOutfit(newOutfit, new OutfitModel.CompleteListener() {
             @Override
             public void onComplete() {
                 NavController navController = Navigation.findNavController(view);

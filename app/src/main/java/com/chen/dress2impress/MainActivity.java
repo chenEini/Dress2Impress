@@ -1,7 +1,6 @@
 package com.chen.dress2impress;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -11,23 +10,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.chen.dress2impress.model.outfit.Outfit;
-import com.chen.dress2impress.model.user.UserModel;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OutfitsListFragment.Delegate {
+    private MainActivityViewModel mViewModel;
+
     NavController navController;
     DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+        mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,17 +54,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         navController.navigate(R.id.outfitsListFragment);
                         break;
                     case R.id.newOutfitFragment:
-                        if (UserModel.instance.isUserLoggedIn()) {
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("Outfit", new Outfit());
-                            navController.navigate(R.id.newOutfitFragment, bundle);
+                        if (mViewModel.isUserLoggedIn()) {
+                            navController.navigate(R.id.newOutfitFragment, mViewModel.createBundle());
                         } else {
                             navController.navigateUp();
                             navController.navigate(R.id.action_global_loginFragment);
                         }
                         break;
                     case R.id.userProfileFragment:
-                        if (UserModel.instance.isUserLoggedIn())
+                        if (mViewModel.isUserLoggedIn())
                             navController.navigate(R.id.userProfileFragment);
                         else {
                             navController.navigateUp();

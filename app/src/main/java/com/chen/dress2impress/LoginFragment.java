@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.chen.dress2impress.model.user.UserModel;
 
 public class LoginFragment extends Fragment {
-
     private LoginViewModel mViewModel;
 
     @Override
