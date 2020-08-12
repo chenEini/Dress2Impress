@@ -39,8 +39,13 @@ public class LoginFragment extends Fragment {
                 mViewModel.login(email.getText().toString(), password.getText().toString(), new UserModel.Listener<Boolean>() {
                     @Override
                     public void onComplete(Boolean data) {
-                        NavController navController = Navigation.findNavController(view);
-                        navController.navigateUp();
+                        if (data) {
+                            view.findViewById(R.id.login_error_msg).setVisibility(View.INVISIBLE);
+                            NavController navController = Navigation.findNavController(view);
+                            navController.navigateUp();
+                        } else {
+                            view.findViewById(R.id.login_error_msg).setVisibility(View.VISIBLE);
+                        }
                     }
                 });
             }

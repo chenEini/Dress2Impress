@@ -96,4 +96,19 @@
         app:layout_constraintStart_toEndOf="@+id/login_new_user_label"
         app:layout_constraintTop_toBottomOf="@+id/login_button" />
 
+    <TextView
+        android:id="@+id/login_error_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="16dp"
+        android:text="Failed to login, are you registered?"
+        android:textColor="#FF0000"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        tools:visibility="invisible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

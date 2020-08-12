@@ -71,7 +71,7 @@ public class OutfitModel {
     }
 
     public void addOrUpdateOutfit(Outfit outfit, final CompleteListener listener) {
-        if (outfit.id != null && !outfit.id.isEmpty())
+        if (!outfit.id.isEmpty())
             OutfitFirebase.updateOutfit(outfit, listener);
         else
             OutfitFirebase.addOutfit(outfit, listener);

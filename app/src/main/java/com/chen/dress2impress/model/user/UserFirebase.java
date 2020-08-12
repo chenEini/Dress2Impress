@@ -33,6 +33,9 @@ public class UserFirebase {
                             }
                         } else {
                             Log.w("TAG", "Failed to register user", task.getException());
+                            if (listener != null) {
+                                listener.onComplete(false);
+                            }
                         }
                     }
                 });
@@ -47,6 +50,11 @@ public class UserFirebase {
                         if (task.isSuccessful()) {
                             if (listener != null) {
                                 listener.onComplete(true);
+                            }
+                        } else {
+                            Log.i("TAG", "Failed to login user", task.getException());
+                            if (listener != null) {
+                                listener.onComplete(false);
                             }
                         }
                     }

@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Outfit implements Serializable {
     @PrimaryKey
     @NonNull
-    public String id;
+    public String id = "";
     public String ownerId;
     public String ownerName;
     public String title;

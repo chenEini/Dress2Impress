@@ -79,7 +79,7 @@ public class OutfitDetailsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (true || outfit.ownerId == UserModel.instance.getCurrentUser().id) {
+        if (outfit.ownerId == UserModel.instance.getCurrentUser().id) {
             inflater.inflate(R.menu.outfit_details_menu, menu);
         }
     }
@@ -96,7 +96,7 @@ public class OutfitDetailsFragment extends Fragment {
             case R.id.menu_outfit_details_delete:
                 List<Outfit> outfitToDelete = new LinkedList<>();
                 outfitToDelete.add(outfit);
-                //OutfitModel.instance.deleteOutfits(outfitToDelete);
+                OutfitModel.instance.deleteOutfits(outfitToDelete);
                 navController.navigateUp();
                 return true;
         }
@@ -107,7 +107,7 @@ public class OutfitDetailsFragment extends Fragment {
         outfitTitle.setText(outfit.title);
         outfitDescription.setText(outfit.description);
 
-        if (!outfit.imageUrl.isEmpty())
+        if (outfit.imageUrl != null && !outfit.imageUrl.isEmpty())
             Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(outfitImage);
         else
             outfitImage.setImageResource(R.drawable.outfit);

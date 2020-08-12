@@ -43,8 +43,11 @@ public class RegisterFragment extends Fragment {
                         new UserModel.Listener<Boolean>() {
                             @Override
                             public void onComplete(Boolean data) {
-                                NavController navController = Navigation.findNavController(view);
-                                navController.navigateUp();
+                                if (data) {
+                                    NavController navController = Navigation.findNavController(view);
+                                    navController.navigateUp();
+                                    navController.navigateUp();
+                                }
                             }
                         });
             }
