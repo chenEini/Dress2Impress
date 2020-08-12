@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.chen.dress2impress.model.outfit.OutfitModel;
 import com.chen.dress2impress.model.outfit.Outfit;
+import com.chen.dress2impress.model.user.UserModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
@@ -131,12 +132,16 @@ public class OutfitsListFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         NavController navController = Navigation.findNavController(outfitsList);
 
-        switch (item.getItemId()) {
-            case R.id.menu_outfit_list_add:
+        if (item.getItemId() == R.id.menu_outfit_list_add) {
+
+            if (UserModel.instance.isUserLoggedIn()) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Outfit", new Outfit());
-                navController.navigate(R.id.action_global_newOutfitFragment, bundle);
-                return true;
+                navController.navigate(R.id.newOutfitFragment, bundle);
+            } else {
+                navController.navigate(R.id.action_global_loginFragment);
+            }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
