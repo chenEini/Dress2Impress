@@ -115,7 +115,7 @@ public class NewOutfitFragment extends Fragment {
         final String title = outfitTitle.getText().toString();
         final String description = outfitDescription.getText().toString();
         User user = UserModel.instance.getCurrentUser();
-        Outfit newOutfit = new Outfit(user.id, user.name, title, url, description);
+        final Outfit newOutfit = new Outfit(user.id, user.name, title, url, description);
         if (!outfit.id.isEmpty()) {
             newOutfit.setId(outfit.id);
         }
@@ -123,14 +123,16 @@ public class NewOutfitFragment extends Fragment {
             @Override
             public void onComplete() {
                 NavController navController = Navigation.findNavController(view);
-                navController.navigateUp();
+
+                if (!outfit.id.isEmpty())
+                    navController.navigate(R.id.outfitsListFragment);
+                else
+                    navController.navigateUp();
             }
         });
     }
 
-    private
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private void uploadImage() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
