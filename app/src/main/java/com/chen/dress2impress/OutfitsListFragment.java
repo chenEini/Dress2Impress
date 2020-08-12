@@ -42,7 +42,7 @@ public class OutfitsListFragment extends Fragment {
     Delegate parent;
 
     interface Delegate {
-        void onItemSelected(String source,Outfit outfit);
+        void onItemSelected(String source, Outfit outfit);
     }
 
     public OutfitsListFragment() {
@@ -71,7 +71,7 @@ public class OutfitsListFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 Outfit outfit = outfitsData.get(position);
-                parent.onItemSelected("fragment_outfits_list",outfit);
+                parent.onItemSelected("fragment_outfits_list", outfit);
             }
         });
 
@@ -129,11 +129,13 @@ public class OutfitsListFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        NavController navController = Navigation.findNavController(outfitsList);
+
         switch (item.getItemId()) {
             case R.id.menu_outfit_list_add:
-                NavController navController = Navigation.findNavController(outfitsList);
-                NavDirections directions = NewOutfitFragmentDirections.actionGlobalNewOutfitFragment(null);
-                navController.navigate(directions);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("Outfit", new Outfit());
+                navController.navigate(R.id.action_global_newOutfitFragment, bundle);
                 return true;
         }
         return super.onOptionsItemSelected(item);

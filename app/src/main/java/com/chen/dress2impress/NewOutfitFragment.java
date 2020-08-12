@@ -68,8 +68,8 @@ public class NewOutfitFragment extends Fragment {
         outfitDescription = view.findViewById(R.id.new_outfit_description);
 
         if (outfit != null) {
-            outfitTitle.setText(outfit.title);
-            outfitDescription.setText(outfit.description);
+            if (outfit.title != null) outfitTitle.setText(outfit.title);
+            if (outfit.description != null) outfitDescription.setText(outfit.description);
 
             if (outfit.imageUrl != null && outfit.imageUrl != "")
                 Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(imageView);
@@ -101,7 +101,7 @@ public class NewOutfitFragment extends Fragment {
             public void onSuccess(String url) {
                 //User user = UserModel.instance.getCurrentUser();
                 Outfit newOutfit = new Outfit("user.id", "user.name", title, url, description);
-                if (outfit != null) {
+                if (outfit != null && outfit.id != null) {
                     newOutfit.setId(outfit.id);
                 }
                 OutfitModel.instance.addOrUpdateOutfit(newOutfit, new OutfitModel.CompleteListener() {
