@@ -79,7 +79,7 @@ public class OutfitDetailsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if (outfit.ownerId == UserModel.instance.getCurrentUser().id) {
+        if (outfit.ownerId.equals(UserModel.instance.getCurrentUser().id)) {
             inflater.inflate(R.menu.outfit_details_menu, menu);
         }
     }
