@@ -14,8 +14,8 @@ public class UserProfileViewModel extends ViewModel {
 
     public LiveData<List<Outfit>> getData() {
         if (liveData == null) {
-            liveData = OutfitModel.instance.getAllOutfits();
-            //liveData = OutfitModel.instance.getUserOutfits(UserModel.instance.getCurrentUser());
+//            liveData = OutfitModel.instance.getAllOutfits();
+            liveData = OutfitModel.instance.getUserOutfits(UserModel.instance.getCurrentUser());
         }
         return liveData;
     }

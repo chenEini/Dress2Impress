@@ -107,7 +107,7 @@ public class OutfitDetailsFragment extends Fragment {
         outfitTitle.setText(outfit.title);
         outfitDescription.setText(outfit.description);
 
-        if (outfit.imageUrl != null && outfit.imageUrl != "")
+        if (!outfit.imageUrl.isEmpty())
             Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(outfitImage);
         else
             outfitImage.setImageResource(R.drawable.outfit);

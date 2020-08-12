@@ -21,6 +21,8 @@ import androidx.navigation.Navigation;
 import com.chen.dress2impress.model.FirebaseStorage;
 import com.chen.dress2impress.model.outfit.Outfit;
 import com.chen.dress2impress.model.outfit.OutfitModel;
+import com.chen.dress2impress.model.user.User;
+import com.chen.dress2impress.model.user.UserModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -67,15 +69,13 @@ public class NewOutfitFragment extends Fragment {
         outfitTitle = view.findViewById(R.id.new_outfit_title);
         outfitDescription = view.findViewById(R.id.new_outfit_description);
 
-        if (outfit != null) {
-            if (outfit.title != null) outfitTitle.setText(outfit.title);
-            if (outfit.description != null) outfitDescription.setText(outfit.description);
+        if (outfit.title != null) outfitTitle.setText(outfit.title);
+        if (outfit.description != null) outfitDescription.setText(outfit.description);
 
-            if (outfit.imageUrl != null && outfit.imageUrl != "")
-                Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(imageView);
-            else
-                imageView.setImageResource(R.drawable.outfit);
-        }
+        if (!outfit.imageUrl.isEmpty())
+            Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(imageView);
+        else
+            imageView.setImageResource(R.drawable.outfit);
 
         Button saveBtn = view.findViewById(R.id.new_outfit_save_button);
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,37 +90,45 @@ public class NewOutfitFragment extends Fragment {
 
     private void saveOutfit() {
         progressbar.setVisibility(View.VISIBLE);
-
-        final String title = outfitTitle.getText().toString();
-        final String description = outfitDescription.getText().toString();
-
         Date d = new Date();
 
-        FirebaseStorage.uploadImage(imageBitmap, "outfit_image" + d.getTime(), new FirebaseStorage.Listener() {
-            @Override
-            public void onSuccess(String url) {
-                //User user = UserModel.instance.getCurrentUser();
-                Outfit newOutfit = new Outfit("user.id", "user.name", title, url, description);
-                if (outfit != null && outfit.id != null) {
-                    newOutfit.setId(outfit.id);
+        if (imageBitmap != null) {
+            FirebaseStorage.uploadImage(imageBitmap, "outfit_image" + d.getTime(), new FirebaseStorage.Listener() {
+                @Override
+                public void onSuccess(String url) {
+                    NewOutfitFragment.this.addOrUpdateOutfit(url);
                 }
-                OutfitModel.instance.addOrUpdateOutfit(newOutfit, new OutfitModel.CompleteListener() {
-                    @Override
-                    public void onComplete() {
-                        NavController navController = Navigation.findNavController(view);
-                        navController.navigateUp();
-                    }
-                });
-            }
 
+                @Override
+                public void onFail() {
+                    progressbar.setVisibility(View.INVISIBLE);
+                    Snackbar mySnackbar = Snackbar.make(view, R.string.fail_to_save_outfit, Snackbar.LENGTH_LONG);
+                    mySnackbar.show();
+                }
+            });
+        } else {
+            this.addOrUpdateOutfit(outfit.imageUrl);
+        }
+    }
+
+    private void addOrUpdateOutfit(String url) {
+        final String title = outfitTitle.getText().toString();
+        final String description = outfitDescription.getText().toString();
+        User user = UserModel.instance.getCurrentUser();
+        Outfit newOutfit = new Outfit(user.id, user.name, title, url, description);
+        if (!outfit.id.isEmpty()) {
+            newOutfit.setId(outfit.id);
+        }
+        OutfitModel.instance.addOrUpdateOutfit(newOutfit, new OutfitModel.CompleteListener() {
             @Override
-            public void onFail() {
-                progressbar.setVisibility(View.INVISIBLE);
-                Snackbar mySnackbar = Snackbar.make(view, R.string.fail_to_save_outfit, Snackbar.LENGTH_LONG);
-                mySnackbar.show();
+            public void onComplete() {
+                NavController navController = Navigation.findNavController(view);
+                navController.navigateUp();
             }
         });
     }
+
+    private
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 

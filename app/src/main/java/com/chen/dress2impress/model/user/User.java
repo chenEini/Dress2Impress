@@ -13,23 +13,20 @@ public class User implements Serializable {
     public String id;
     public String name;
     public String email;
-    public String imageUrl;
     long lastUpdated;
 
     public User() {
     }
 
-    public User(String name, String email, String imageUrl) {
+    public User(String name, String email) {
         this.name = name;
         this.email = email;
-        this.imageUrl = imageUrl;
     }
 
-    public User(String id, String name, String email, String imageUrl) {
+    public User(String id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.imageUrl = imageUrl;
     }
 
     public void setId(@NonNull String id) {
@@ -44,9 +41,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     @NonNull
     public String getId() {
@@ -59,10 +53,6 @@ public class User implements Serializable {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
     }
 
     public void setLastUpdated(long lastUpdated) {

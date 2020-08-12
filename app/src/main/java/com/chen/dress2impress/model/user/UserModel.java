@@ -19,8 +19,7 @@ public class UserModel {
     }
 
     public boolean isUserLoggedIn() {
-        //return this.getCurrentUser() != null;
-        return false;
+        return this.getCurrentUser() != null;
     }
 
     public void register(User user, String password, Listener<Boolean> listener) {

@@ -1,6 +1,7 @@
 package com.chen.dress2impress.model.user;
 
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -30,6 +31,8 @@ public class UserFirebase {
                             if (listener != null) {
                                 listener.onComplete(true);
                             }
+                        } else {
+                            Log.w("TAG", "Failed to register user", task.getException());
                         }
                     }
                 });
@@ -59,8 +62,7 @@ public class UserFirebase {
         return new User(
                 firUser.getUid(),
                 firUser.getDisplayName(),
-                firUser.getEmail(),
-                firUser.getPhotoUrl().toString()
+                firUser.getEmail()
         );
     }
 
@@ -69,7 +71,6 @@ public class UserFirebase {
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(user.name)
-                .setPhotoUri(Uri.parse(user.imageUrl))
                 .build();
 
         firebaseUser.updateProfile(profileUpdates);
