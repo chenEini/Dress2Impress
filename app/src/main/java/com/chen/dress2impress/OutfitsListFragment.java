@@ -2,20 +2,6 @@ package com.chen.dress2impress;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,9 +11,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.chen.dress2impress.model.outfit.OutfitModel;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chen.dress2impress.model.outfit.Outfit;
-import com.chen.dress2impress.model.user.UserModel;
+import com.chen.dress2impress.model.outfit.OutfitModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
@@ -134,7 +130,7 @@ public class OutfitsListFragment extends Fragment {
 
         if (item.getItemId() == R.id.menu_outfit_list_add) {
 
-            if (UserModel.instance.isUserLoggedIn()) {
+            if (viewModel.isUserLoggedIn()) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("Outfit", new Outfit());
                 navController.navigate(R.id.newOutfitFragment, bundle);

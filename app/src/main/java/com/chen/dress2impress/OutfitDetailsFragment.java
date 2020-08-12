@@ -2,14 +2,6 @@ package com.chen.dress2impress;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,16 +11,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+
 import com.chen.dress2impress.model.outfit.Outfit;
-import com.chen.dress2impress.model.outfit.OutfitModel;
 import com.chen.dress2impress.model.user.User;
-import com.chen.dress2impress.model.user.UserModel;
 import com.squareup.picasso.Picasso;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class OutfitDetailsFragment extends Fragment {
+    private OutfitDetailsViewModel viewModel;
     private Outfit outfit;
     View view;
 
@@ -75,12 +70,14 @@ public class OutfitDetailsFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         setHasOptionsMenu(true);
+
+        viewModel = new ViewModelProvider(this).get(OutfitDetailsViewModel.class);
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        User user = UserModel.instance.getCurrentUser();
+        User user = viewModel.getCurrentUser();
         if (user != null && outfit.ownerId.equals(user.id)) {
             inflater.inflate(R.menu.outfit_details_menu, menu);
         }
@@ -96,7 +93,7 @@ public class OutfitDetailsFragment extends Fragment {
                 navController.navigate(updatedDirections);
                 return true;
             case R.id.menu_outfit_details_delete:
-                OutfitModel.instance.deleteOutfit(outfit);
+                viewModel.deleteOutfit(outfit);
                 navController.navigateUp();
                 return true;
         }
