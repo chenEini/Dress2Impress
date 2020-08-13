@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel;
 import com.chen.dress2impress.model.outfit.Outfit;
 import com.chen.dress2impress.model.outfit.OutfitModel;
 import com.chen.dress2impress.model.user.User;
-import com.chen.dress2impress.model.user.UserFirebase;
 import com.chen.dress2impress.model.user.UserModel;
 
 public class NewOutfitViewModel extends ViewModel {

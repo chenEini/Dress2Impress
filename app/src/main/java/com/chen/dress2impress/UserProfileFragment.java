@@ -2,12 +2,9 @@ package com.chen.dress2impress;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,13 +16,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chen.dress2impress.model.outfit.Outfit;
-import com.chen.dress2impress.model.outfit.OutfitModel;
 import com.chen.dress2impress.model.user.User;
 import com.chen.dress2impress.model.user.UserModel;
-import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;

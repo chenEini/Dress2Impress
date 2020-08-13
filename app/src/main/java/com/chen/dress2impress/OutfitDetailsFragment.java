@@ -29,6 +29,7 @@ public class OutfitDetailsFragment extends Fragment {
 
     TextView outfitTitle;
     TextView outfitDescription;
+    TextView outfitOwnerName;
     ImageView outfitImage;
 
     public OutfitDetailsFragment() {
@@ -48,6 +49,7 @@ public class OutfitDetailsFragment extends Fragment {
 
         outfitTitle = view.findViewById(R.id.outfit_details_title);
         outfitDescription = view.findViewById(R.id.outfit_details_description);
+        outfitOwnerName = view.findViewById(R.id.outfit_details_owner_name);
         outfitImage = view.findViewById(R.id.outfit_details_image);
 
         outfit = OutfitDetailsFragmentArgs.fromBundle(getArguments()).getOutfit();
@@ -103,6 +105,7 @@ public class OutfitDetailsFragment extends Fragment {
     private void updateOutfitDisplay() {
         outfitTitle.setText(outfit.title);
         outfitDescription.setText(outfit.description);
+        outfitOwnerName.setText(outfit.ownerName);
 
         if (outfit.imageUrl != null && !outfit.imageUrl.isEmpty())
             Picasso.get().load(outfit.imageUrl).placeholder(R.drawable.outfit).into(outfitImage);
