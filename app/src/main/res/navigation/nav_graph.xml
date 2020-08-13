@@ -30,8 +30,8 @@
     <fragment
         android:id="@+id/newOutfitFragment"
         android:name="com.chen.dress2impress.NewOutfitFragment"
-        android:label="New Outfit"
-        tools:layout="@layout/fragment_new_outfit" >
+        android:label="Outfit"
+        tools:layout="@layout/fragment_new_outfit">
         <argument
             android:name="Outfit"
             app:argType="com.chen.dress2impress.model.outfit.Outfit" />
